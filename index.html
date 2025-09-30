@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Form Cetak Pengujian Sampel</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 12px; background:#f2f2f2; }
+    .container { max-width: 320px; margin: 0 auto; }
+    form, .receipt { background:white; padding:12px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+    label { display:block; margin-top:8px; font-size:13px; }
+    input { width:100%; padding:6px; margin-top:4px; box-sizing:border-box; }
+    .btn { margin-top:10px; padding:8px 12px; border:none; border-radius:4px; cursor:pointer; }
+    .btn-primary { background:#1e88e5; color:white; }
+    .btn-secondary { background:#eee; }
+
+    /* area cetak */
+    .receipt { margin-top:12px; width:220px; } /* 220px = kertas 58mm */
+    .receipt h3 { text-align:center; margin:0 0 6px 0; font-size:14px; }
+    .receipt p { margin:4px 0; font-size:12px; }
+
+    @media print {
+      body { background:white; }
+      form { display:none; }
+      .container { box-shadow:none; margin:0; }
+      .receipt { box-shadow:none; border-radius:0; }
+      @page { size: 58mm auto; margin: 2mm; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Form Pengujian Sampel</h2>
+    <form id="form">
+      <label>Tanggal Penerimaan
+        <input type="date" id="tanggal" />
+      </label>
+      <label>No. Order
+        <input type="text" id="order" />
+      </label>
+      <label>Material Uji
+        <input type="text" id="material" />
+      </label>
+      <label>Jenis Uji
+        <input type="text" id="jenis" />
+      </label>
+      <button type="button" id="buat" class="btn btn-primary">Buat Resi</button>
+      <button type="button" id="cetak" class="btn btn-secondary">Cetak</button>
+    </form>
+
+    <div class="receipt" id="resi">
+      <h3>BUKTI PENERIMAAN</h3>
+      <p id="rTanggal">Tanggal Penerimaan: -</p>
+      <p id="rOrder">No. Order: -</p>
+      <p id="rMaterial">Material Uji: -</p>
+      <p id="rJenis">Jenis Uji: -</p>
+      <p style="text-align:center; margin-top:10px; font-size:11px;">Terima kasih</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('buat').addEventListener('click', () => {
+      document.getElementById('rTanggal').textContent = "Tanggal Penerimaan: " + (document.getElementById('tanggal').value || "-");
+      document.getElementById('rOrder').textContent = "No. Order: " + (document.getElementById('order').value || "-");
+      document.getElementById('rMaterial').textContent = "Material Uji: " + (document.getElementById('material').value || "-");
+      document.getElementById('rJenis').textContent = "Jenis Uji: " + (document.getElementById('jenis').value || "-");
+    });
+
+    document.getElementById('cetak').addEventListener('click', () => {
+      window.print();
+    });
+  </script>
+</body>
+</html>
